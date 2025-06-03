@@ -34,8 +34,9 @@ def logout_view(request):
     return redirect('login')
 
 def product(request):
-    products = Product.objects.all()
-    paginator = Paginator(products, 20)  # Show 20 products per page
+    products = Product.objects.all().order_by('id')  # or any stable field
+    paginator = Paginator(products, 20)
+  # Show 20 products per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request,"product.html",{'page_obj': page_obj})
